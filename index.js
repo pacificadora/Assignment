@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 
-const userRoutes = require("./routes/userRoutes");
-const articleRoutes = require("./routes/articleRoutes");
+const userRoutes = require("./routes/UserRoutes");
+const articleRoutes = require("./routes/ArticleRoutes");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
