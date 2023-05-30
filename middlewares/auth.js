@@ -20,6 +20,7 @@ exports.auth = async (req, res, next) => {
       req.user = payload;
     } catch (error) {
       return res.status(400).json({
+        error: error.message,
         success: false,
         message: "token is invalid",
       });

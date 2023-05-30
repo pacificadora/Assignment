@@ -1,19 +1,20 @@
 const UserModel = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 exports.signUp = async (req, res) => {
   try {
     //data fetch
-    const { email, Name, password, confirmPassword, age } = req.body;
+    const { email, name, password, confirmPassword, age } = req.body;
 
     //validate data
-    if (!email || !Name || !password || !confirmPassword || age) {
+    if (!email || !name || !password || !confirmPassword || !age) {
       return res.status(400).json({
         success: false,
         message: "please fill all the details",
       });
     }
     //validate user
-    const userDetails = await userModel.findOne({ email });
+    const userDetails = await UserModel.findOne({ email });
     if (userDetails) {
       return res.status(400).json({
         success: false,
@@ -31,8 +32,8 @@ exports.signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     //create a profile
-    const user = await userModel.create({
-      Name,
+    const user = await UserModel.create({
+      name,
       email,
       password: hashedPassword,
       age: age,
@@ -83,13 +84,13 @@ exports.login = async (req, res) => {
     const payload = {
       email: userDetails.email,
       id: userDetails._id,
-      accountType: userDetails.accountType,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "2h",
     });
     userDetails.token = token;
     userDetails.password = undefined;
+    // let userDetailsObject = userDetails.toObject();
 
     const options = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),

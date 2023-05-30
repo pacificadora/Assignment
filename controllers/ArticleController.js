@@ -5,14 +5,15 @@ const UserModel = require("../models/UserModel");
 exports.createArticle = async (req, res) => {
   try {
     const { description, title } = req.body;
-    const userId = req.param.userId;
-    if (!description || !article) {
+    const userId = req.params.userId;
+    console.log(userId, description, title);
+    if (!description || !title) {
       return res.status(400).json({
         success: false,
         message: "Please enter all the details",
       });
     }
-    const userDetails = await UserModel.findById(userId);
+    const userDetails = await UserModel.findOne({ _id: userId });
     if (!userDetails) {
       return res.status(404).json({
         success: false,
@@ -30,6 +31,7 @@ exports.createArticle = async (req, res) => {
       data: article,
     });
   } catch (error) {
+    console.log(error);
     return res.status(502).json({
       success: false,
       message: "article cannot be created, please try again",
