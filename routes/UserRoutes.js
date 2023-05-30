@@ -11,6 +11,6 @@ const { auth } = require("../middlewares/auth");
 
 router.post("/login", login);
 router.post("/signup", signUp);
-router.post("/users/:userId", updateProfile);
+router.patch("/users/:userId", updateProfile);
 
 module.exports = router;

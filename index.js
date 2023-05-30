@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const userRoutes = require("./routes/UserRoutes");
+const userRoutes = require("./routes/userRoutes");
 const articleRoutes = require("./routes/articleRoutes");
 
 const database = require("./config/database");
@@ -21,7 +21,7 @@ app.use("/api", userRoutes);
 app.use("/api", articleRoutes);
 
 app.use("/", (req, res) => {
-  return res.statusCode(200).json({
+  return res.status(200).json({
     success: true,
     message: "Your server is up and running...",
   });

@@ -118,7 +118,7 @@ exports.updateProfile = async (req, res) => {
     //get data
     const { name, age } = req.body;
     //get userId
-    const userId = req.param.id;
+    const userId = req.params.userId;
 
     //find profile
     const userDetails = await UserModel.findByIdAndUpdate(
